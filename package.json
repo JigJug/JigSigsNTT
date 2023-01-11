@@ -1,0 +1,25 @@
+{
+  "name": "jigsigntt",
+  "version": "1.0.0",
+  "description": "Nance top trader signals",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JigJug/JigSigsNTT.git"
+  },
+  "author": "JigJug",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JigJug/JigSigsNTT/issues"
+  },
+  "homepage": "https://github.com/JigJug/JigSigsNTT#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "puppeteer": "^19.5.0"
+  }
+}
