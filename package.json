@@ -4,6 +4,7 @@
   "description": "Nance top trader signals",
   "main": "index.js",
   "scripts": {
+    "start": "node ./app/index.js",
     "test": "test"
   },
   "repository": {

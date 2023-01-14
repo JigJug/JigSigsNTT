@@ -1,0 +1,5 @@
+node_modules/
+app/
+configs.json
+package-lock.json
+tsconfig.json

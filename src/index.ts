@@ -1,3 +1,3 @@
-function hello(){
-    console.log('hi')
-}
+import { startBot } from "./main";
+
+startBot();

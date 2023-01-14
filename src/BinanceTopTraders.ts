@@ -1,6 +1,6 @@
 //import * as axios from 'axios'
 //import { HttpsGetRequest } from './https';
-import * as fs from 'fs/promises'
+/*import * as fs from 'fs/promises'
 
 class NewTrade{
     name
@@ -46,7 +46,7 @@ export async function getBinanceTopTraderData(){
 
         //new selenium try - making a request to the page did not work and did not pull dynamic data
         //const nanceLeaderUpdate = await example();
-        await bot(nanceLeaderUpdate);
+        //await bot(nanceLeaderUpdate);
 
         
         //const html = await getHtml(url);
@@ -146,8 +146,8 @@ async function bot(message: string){
 }
 
 
-import {Builder, By, Key, until} from 'selenium-webdriver';
-import { INTERNAL_COMPUTE_OFFSET_SCRIPT } from 'selenium-webdriver/lib/input';
+//import {Builder, By, Key, until} from 'selenium-webdriver';
+//import { INTERNAL_COMPUTE_OFFSET_SCRIPT } from 'selenium-webdriver/lib/input';
 import { traceDeprecation } from 'process';
 import { stringify } from 'querystring';
 
@@ -317,4 +317,4 @@ async function newTradeSniffer(tradeArr: Trade[]) {
 function split(string: string, trade: Trade){
     string.split(' \n');
 
-}
+}*/
