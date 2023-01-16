@@ -3,6 +3,7 @@ import { TelegramBot } from "./Telegram/BotClass";
 import { messageMaker } from "./Telegram/TgMessage";
 import { getTrades, compareArrays, returnNew} from "./Scraper/WebScraperClass";
 
+
 interface Trade {
     pair: string;
     side: string;
@@ -13,12 +14,15 @@ interface Trade {
 
 class Worker {
 
+    botToken
     tgBot
     tradeArray: Trade[] = []
 
 
     constructor(){
-        this.tgBot = new TelegramBot("", '1672696212')
+        this.botToken = require('../configs.json')
+        console.log(this.botToken.botToken)
+        this.tgBot = new TelegramBot(this.botToken.botToken, '1672696212')
     }
 
 
@@ -26,18 +30,18 @@ class Worker {
 
         console.log('bot strted')
 
-        
-
         //this runs first
-        getTrades()
+        getTrades(false)
         .then((tr) => {
 
             this.tradeArray = tr
 
             //testing
-            let rand = Math.floor(Math.random() * this.tradeArray.length)
-            console.log(rand)
-            this.tradeArray.splice(rand, 1)
+            //let rand = Math.floor(Math.random() * this.tradeArray.length)
+            //console.log(rand)
+            //console.log(this.tradeArray[1])
+            //this.tradeArray.splice(1, 1)
+            //console.log('trade array start', this.tradeArray)
             
 
         }).catch((err) => {
@@ -67,7 +71,7 @@ class Worker {
             
         try{
             //get the trades
-            const tradeArray = await getTrades();
+            const tradeArray = await getTrades(true);
             //check the trade arrays to see if there are any differences between the old and new arrays
             const compArr = compareArrays(this.tradeArray, tradeArray)
 
@@ -78,31 +82,39 @@ class Worker {
             //update the trade array
             //remove old trdes first - get the indexes of the expired trades with this trade array and missing pairs
             // loop through the index and splice the trade array
+            //dont get indexes. remove trades by the pair names.
+            //console.log('before remove old: ', this.tradeArray)
             this.removeOldTrades(compArr.missingPair)
+            //console.log('after remove old: ', this.tradeArray)
             
             //add in the new trades - return the new aded trades
             const tradeMessage = returnNew(compArr.newTrAr, compArr.newPair)
+            console.log('trademessage', tradeMessage)
             //add them to the array
-            this.tradeArray.concat(tradeMessage)
+            //console.log('before add new: ', this.tradeArray)
+            this.addNewTrades(tradeMessage)
+
+            //console.log('after added new trade: ',this.tradeArray)
 
             //const indexes = updateTradeArry(this.tradeArray,tradeArray);
             //console.log('remove indexes:: ', indexes)
 
 
-            //testing
-            let rand = Math.floor(Math.random() * this.tradeArray.length)
-            console.log('RAND = ',rand)
-            this.tradeArray.splice(rand, 1)
-
             
-
             //send an array of pairs
             tradeMessage.forEach( async (v) => {
                 const msg = messageMaker(v)
 
-                console.log(msg)
-                //await this.tgBot.sendMessage(msg)
+                //console.log(msg)
+                await this.tgBot.sendMessage(msg)
             });
+
+            //testing
+            //let rand = Math.floor(Math.random() * this.tradeArray.length)
+            //console.log('RAND = ',rand)
+            //remove element 2
+            //console.log('removing ele: ', this.tradeArray[1])
+            //this.tradeArray.splice(1, 1)
             
             
             
@@ -125,11 +137,19 @@ class Worker {
             }
         })
 
+        console.log(indexes)
+
         indexes.forEach((v) => {
-            console.log(this.tradeArray[v])
+            //console.log(this.tradeArray[v])
             this.tradeArray.splice(v, 1)
         })
             
+    }
+
+    addNewTrades(newTrades: Trade[]){
+        newTrades.forEach((v) => {
+            this.tradeArray.push(v)
+        })
     }
 
 
