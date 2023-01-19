@@ -112,22 +112,14 @@ export async function getTrades(test: boolean){
 export function compareArrays(trOrig: Trade[], trNew: Trade[]){
 
     console.log('comp arrs')
-    //console.log(trOrig.length)
-    //console.log(trNew.length)
 
     //check for bad results
     if(trNew[0].pair == '' || trNew[0].pair == undefined ) return null
-    //console.log(trOrig)
-
-    
+    if(trNew.length == 0) return null
 
     //get pairs of origional trades and the new trades from the scraped data
     const pairsOr = trOrig.map(v => {return v.pair}).sort();
     const pairsNu = trNew.map(v => {return v.pair}).sort();
-
-    //console.log(pairsOr)
-    //console.log(pairsNu)
-
 
     //find the new pairs in new data
     const newPair = findNewInArry(pairsOr, pairsNu);
@@ -135,9 +127,6 @@ export function compareArrays(trOrig: Trade[], trNew: Trade[]){
 
     //find missing pairs from old data
     const missingPAirs = findNewInArry(pairsNu, pairsOr);
-    //console.log('missing pair in old array', missingPAirs)
-    //console.log()
-    //console.log(newPair)
 
     //only care about new pairs. when we find missing pairs with a new pair we can update the arrays then.
     //if we want to notify on closed trades we will need to make some chamges, for now this is fine. 
